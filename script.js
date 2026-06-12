@@ -20,6 +20,7 @@ const playerButton = document.getElementById("playerButton");
 const easyBotButton = document.getElementById("easyBotButton");
 const mediumBotButton = document.getElementById("mediumBotButton");
 const hardBotButton = document.getElementById("hardBotButton");
+const extremeBotButton = document.getElementById("extremeBotButton");
 
 const menuButton = document.getElementById("menuButton");
 const restartButton = document.getElementById("restartButton");
@@ -74,6 +75,12 @@ mediumBotButton.onclick = function () {
 hardBotButton.onclick = function () {
   gameMode = "bot";
   botDifficulty = "hard";
+  showGame();
+};
+
+extremeBotButton.onclick = function () {
+  gameMode = "bot";
+  botDifficulty = "extreme";
   showGame();
 };
 
@@ -360,7 +367,13 @@ function botPlacePiece() {
     square = findWinningSquare(selectedPiece);
 
     if (square === null) {
-      square = botDifficulty === "hard" ? bestHardSquare(selectedPiece) : randomEmptySquare();
+      if (botDifficulty === "hard") {
+        square = bestHardSquare(selectedPiece);
+      } else if (botDifficulty === "extreme") {
+        square = bestExtremeSquare(selectedPiece);
+      } else {
+        square = randomEmptySquare();
+      }
     }
   }
 
@@ -377,10 +390,13 @@ function botChoosePiece() {
     let safePieces = pieces.filter(piece => !canOpponentWinImmediately(piece));
 
     if (safePieces.length > 0) {
-      selectedPiece =
-        botDifficulty === "hard"
-          ? chooseHardPiece(safePieces)
-          : randomPiece(safePieces);
+      if (botDifficulty === "hard") {
+        selectedPiece = chooseHardPiece(safePieces);
+      } else if (botDifficulty === "extreme") {
+        selectedPiece = chooseExtremePiece(safePieces);
+      } else {
+        selectedPiece = randomPiece(safePieces);
+      }
     } else {
       selectedPiece = randomPiece(pieces);
     }
@@ -434,6 +450,109 @@ function chooseHardPiece(pieceOptions) {
   }
 
   return bestPiece;
+}
+
+function bestExtremeSquare(piece) {
+  let emptySquares = getEmptySquares();
+  let bestSquare = randomEmptySquare();
+  let bestScore = -9999;
+
+  for (let square of emptySquares) {
+    let testBoard = [...board];
+    testBoard[square] = piece;
+
+    let score = 0;
+
+    score += countThreeThreats(testBoard) * 5;
+    score += countTwoThreats(testBoard) * 2;
+
+    if ([5, 6, 9, 10].includes(square)) {
+      score += 3;
+    }
+
+    if ([0, 3, 12, 15].includes(square)) {
+      score += 1;
+    }
+
+    let safeNextPieces = pieces.filter(p => p !== piece && !wouldPieceWinOnBoard(testBoard, p));
+
+    score += safeNextPieces.length;
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestSquare = square;
+    }
+  }
+
+  return bestSquare;
+}
+
+function chooseExtremePiece(pieceOptions) {
+  let bestPiece = randomPiece(pieceOptions);
+  let bestScore = 9999;
+
+  for (let piece of pieceOptions) {
+    let danger = 0;
+
+    danger += countPossibleWinningSquares(piece) * 10;
+    danger += countThreatSquaresForPiece(piece) * 3;
+
+    if (danger < bestScore) {
+      bestScore = danger;
+      bestPiece = piece;
+    }
+  }
+
+  return bestPiece;
+}
+
+function countTwoThreats(testBoard) {
+  let count = 0;
+
+  for (let line of getLines()) {
+    let piecesInLine = line.map(index => testBoard[index]);
+    let filled = piecesInLine.filter(piece => piece !== null);
+
+    if (filled.length === 2) {
+      for (let traitPosition = 0; traitPosition < 4; traitPosition++) {
+        let trait = filled[0][traitPosition];
+
+        if (filled.every(piece => piece[traitPosition] === trait)) {
+          count++;
+        }
+      }
+    }
+  }
+
+  return count;
+}
+
+function wouldPieceWinOnBoard(testBoard, piece) {
+  for (let i = 0; i < testBoard.length; i++) {
+    if (testBoard[i] === null) {
+      let copy = [...testBoard];
+      copy[i] = piece;
+
+      if (getWinningLine(copy) !== null) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+function countThreatSquaresForPiece(piece) {
+  let count = 0;
+
+  for (let square of getEmptySquares()) {
+    let testBoard = [...board];
+    testBoard[square] = piece;
+
+    count += countThreeThreats(testBoard);
+  }
+
+  return count;
 }
 
 function countPossibleWinningSquares(piece) {
