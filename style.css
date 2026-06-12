@@ -5,6 +5,10 @@
   --square-hover: #c99763;
   --border-colour: #3b2414;
   --piece-bg: #f3e3c8;
+
+  --light-piece: #d2b48c;
+  --dark-piece: #6f4e37;
+  --piece-border: black;
 }
 
 body {
@@ -167,7 +171,7 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid black;
+  border: 3px solid var(--piece-border);
   position: relative;
 }
 
@@ -182,11 +186,11 @@ button:hover {
 }
 
 .light {
-  background-color: #d2b48c;
+  background-color: var(--light-piece);
 }
 
 .dark {
-  background-color: #6f4e37;
+  background-color: var(--dark-piece);
 }
 
 .round {
@@ -257,6 +261,10 @@ footer {
   --square-bg: #b88755;
   --square-hover: #c99763;
   --border-colour: #3b2414;
+  
+  --light-piece: #d2b48c;
+  --dark-piece: #6f4e37;
+  --piece-border: black;
 }
 
 .theme-blackwhite {
@@ -265,6 +273,10 @@ footer {
   --square-bg: #dddddd;
   --square-hover: #bbbbbb;
   --border-colour: black;
+
+  --light-piece: white;
+  --dark-piece: black;
+  --piece-border: black;
 }
 
 .theme-redblue {
@@ -273,6 +285,10 @@ footer {
   --square-bg: #e63946;
   --square-hover: #f05d68;
   --border-colour: #0f2238;
+
+  --light-piece: #e63946;
+  --dark-piece: #1d3557;
+  --piece-border: #0f2238;
 }
 
 .theme-forest {
@@ -281,6 +297,10 @@ footer {
   --square-bg: #52b788;
   --square-hover: #74c69d;
   --border-colour: #1b4332;
+
+  --light-piece: #95d5b2;
+  --dark-piece: #1b4332;
+  --piece-border: #081c15;
 }
 
 .theme-purplegold {
@@ -289,4 +309,8 @@ footer {
   --square-bg: #7b2cbf;
   --square-hover: #9d4edd;
   --border-colour: #ffbe0b;
+
+  --light-piece: #ffbe0b;
+  --dark-piece: #5a189a;
+  --piece-border: #240046;
 }
