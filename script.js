@@ -13,8 +13,16 @@ let player2Score = Number(localStorage.getItem("player2Score")) || 0;
 
 let historyVisible = true;
 
+let boardHistory = [];
+let reviewIndex = -1;
+let reviewing = false;
+
 const menu = document.getElementById("menu");
 const game = document.getElementById("game");
+
+const backMoveButton = document.getElementById("backMoveButton");
+const forwardMoveButton = document.getElementById("forwardMoveButton");
+const reviewText = document.getElementById("reviewText");
 
 const playerButton = document.getElementById("playerButton");
 const easyBotButton = document.getElementById("easyBotButton");
@@ -115,6 +123,33 @@ toggleHistoryButton.onclick = function () {
   }
 };
 
+backMoveButton.onclick = function () {
+  if (boardHistory.length === 0) return;
+
+  reviewing = true;
+
+  if (reviewIndex === -1) {
+    reviewIndex = boardHistory.length - 1;
+  } else if (reviewIndex > 0) {
+    reviewIndex--;
+  }
+
+  drawEverything();
+};
+
+forwardMoveButton.onclick = function () {
+  if (boardHistory.length === 0) return;
+
+  if (reviewIndex < boardHistory.length - 1) {
+    reviewIndex++;
+  } else {
+    reviewing = false;
+    reviewIndex = -1;
+  }
+
+  drawEverything();
+};
+
 function showGame() {
   menu.style.display = "none";
   game.style.display = "block";
@@ -138,6 +173,10 @@ function startGame() {
   winningLine = [];
   lastBotSquare = null;
   moveHistory = [];
+
+  boardHistory = [];
+  reviewIndex = -1;
+  reviewing = false;
 
   message.textContent =
     gameMode === "bot"
@@ -183,25 +222,33 @@ function makePiece(piece) {
 function drawBoard() {
   boardDiv.innerHTML = "";
 
+  let boardToShow = board;
+
+  if (reviewing && reviewIndex !== -1) {
+    boardToShow = boardHistory[reviewIndex].board;
+  }
+
   for (let i = 0; i < 16; i++) {
     let square = document.createElement("div");
     square.className = "square";
     square.dataset.coord = indexToCoord(i);
 
-    if (winningLine.includes(i)) {
+    if (!reviewing && winningLine.includes(i)) {
       square.classList.add("winning-square");
     }
 
-    if (i === lastBotSquare && winner === null) {
+    if (!reviewing && i === lastBotSquare && winner === null) {
       square.classList.add("bot-move");
     }
 
-    if (board[i] !== null) {
-      square.appendChild(makePiece(board[i]));
+    if (boardToShow[i] !== null) {
+      square.appendChild(makePiece(boardToShow[i]));
     }
 
     square.onclick = function () {
-      placePiece(i);
+      if (!reviewing) {
+        placePiece(i);
+      }
     };
 
     boardDiv.appendChild(square);
@@ -240,10 +287,21 @@ function drawPreview() {
 function drawHistory() {
   historyList.innerHTML = "";
 
-  for (let move of moveHistory) {
+  for (let i = 0; i < moveHistory.length; i++) {
     let item = document.createElement("li");
-    item.textContent = move;
+    item.textContent = moveHistory[i];
+
+    if (reviewing && i === reviewIndex) {
+      item.classList.add("current-review-move");
+    }
+
     historyList.appendChild(item);
+  }
+
+  if (reviewing && reviewIndex !== -1) {
+    reviewText.textContent = "Move " + (reviewIndex + 1) + " / " + boardHistory.length;
+  } else {
+    reviewText.textContent = "Live Game";
   }
 }
 
@@ -286,9 +344,9 @@ function placePiece(index) {
   }
 
   if (gameMode === "bot") {
-    moveHistory.push("You placed " + pieceName(selectedPiece) + " at " + indexToCoord(index) + ".");
-  } else {
-    moveHistory.push("Player " + placer + " placed " + pieceName(selectedPiece) + " at " + indexToCoord(index) + ".");
+    moveHistory.push(
+  pieceName(selectedPiece) + " - " + indexToCoord(index)
+);
   }
 
   putPieceOnBoard(index, false);
@@ -296,6 +354,9 @@ function placePiece(index) {
 
 function putPieceOnBoard(index, botMoved) {
   board[index] = selectedPiece;
+  boardHistory.push({
+    board: [...board]
+  });
   pieces = pieces.filter(piece => piece !== selectedPiece);
   selectedPiece = null;
 
@@ -377,8 +438,9 @@ function botPlacePiece() {
     }
   }
 
-  moveHistory.push("Bot placed " + pieceName(selectedPiece) + " at " + indexToCoord(square) + ".");
-  putPieceOnBoard(square, true);
+  moveHistory.push(
+  pieceName(selectedPiece) + " - " + indexToCoord(square)
+);
 }
 
 function botChoosePiece() {
