@@ -307,15 +307,14 @@ function drawHistory() {
 
 function choosePiece(piece) {
   if (winner !== null) return;
+  if (reviewing) return;
   if (gameMode === "bot" && chooser === botPlayer) return;
 
   selectedPiece = piece;
 
   if (gameMode === "bot") {
-    moveHistory.push("You gave " + pieceName(piece) + " to the bot.");
     message.textContent = "Bot is placing the piece...";
   } else {
-    moveHistory.push("Player " + chooser + " gave " + pieceName(piece) + " to Player " + placer + ".");
     message.textContent = "Player " + placer + ", place this piece";
   }
 
@@ -328,6 +327,7 @@ function choosePiece(piece) {
 
 function placePiece(index) {
   if (winner !== null) return;
+  if (reviewing) return;
   if (gameMode === "bot" && placer === botPlayer) return;
 
   if (selectedPiece === null) {
@@ -343,11 +343,9 @@ function placePiece(index) {
     return;
   }
 
-  if (gameMode === "bot") {
-    moveHistory.push(
-  pieceName(selectedPiece) + " - " + indexToCoord(index)
-);
-  }
+  moveHistory.push(
+    pieceName(selectedPiece) + " - " + indexToCoord(index)
+  );
 
   putPieceOnBoard(index, false);
 }
@@ -439,8 +437,10 @@ function botPlacePiece() {
   }
 
   moveHistory.push(
-  pieceName(selectedPiece) + " - " + indexToCoord(square)
-);
+    pieceName(selectedPiece) + " - " + indexToCoord(square)
+  );
+
+  putPieceOnBoard(square, true);
 }
 
 function botChoosePiece() {
@@ -464,7 +464,6 @@ function botChoosePiece() {
     }
   }
 
-  moveHistory.push("Bot gave " + pieceName(selectedPiece) + " to you.");
   message.textContent = "Bot chose a piece for you. Place it on the board.";
 
   drawEverything();
