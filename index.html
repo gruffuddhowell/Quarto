@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quarto</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Quarto</h1>
+
+  <div id="menu">
+    <h2>Choose game mode</h2>
+    <button id="playerButton">Play against Player</button>
+
+    <h2>Play against Bot</h2>
+    <button id="easyBotButton">Easy Bot</button>
+    <button id="mediumBotButton">Medium Bot</button>
+    <button id="hardBotButton">Hard Bot</button>
+  </div>
+
+  <div id="game">
+    <div id="scoreboard"></div>
+    <h2 id="message"></h2>
+
+    <div id="previewArea">
+      <p>Piece to place:</p>
+      <div id="previewPiece"></div>
+    </div>
+
+    <button id="restartButton">New Game</button>
+    <button id="toggleHistoryButton">Hide History</button>
+    <button id="resetScoreButton">Reset Scores</button>
+    <button id="menuButton">Back to Menu</button>
+
+    <div id="mainGameArea">
+      <div id="board"></div>
+
+      <div id="historyBox">
+        <h2>Move History</h2>
+        <ol id="history"></ol>
+      </div>
+    </div>
+
+    <h2>Pieces</h2>
+    <div id="pieces"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
