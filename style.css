@@ -206,3 +206,17 @@ footer {
     font-size: 16px;
     color: #3b2414;
 }
+
+#rulesPanel {
+  display: none;
+
+  max-width: 600px;
+  margin: 20px auto;
+
+  background-color: #f3e3c8;
+  border: 4px solid #3b2414;
+  border-radius: 15px;
+
+  padding: 20px;
+  text-align: left;
+}

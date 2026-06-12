@@ -32,10 +32,28 @@ const scoreboard = document.getElementById("scoreboard");
 const previewPiece = document.getElementById("previewPiece");
 const historyList = document.getElementById("history");
 
+const rulesButton =
+  document.getElementById("rulesButton");
+
+const rulesPanel =
+  document.getElementById("rulesPanel");
+
 const toggleHistoryButton =
   document.getElementById("toggleHistoryButton");
 
-playerButton.onclick = function () {
+rulesButton.onclick = function () {
+
+  if (rulesPanel.style.display === "block") {
+    rulesPanel.style.display = "none";
+    rulesButton.textContent = "Rules";
+  } else {
+    rulesPanel.style.display = "block";
+    rulesButton.textContent = "Hide Rules";
+  }
+
+};
+
+  playerButton.onclick = function () {
   gameMode = "player";
   botDifficulty = null;
   showGame();
