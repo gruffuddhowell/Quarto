@@ -232,7 +232,12 @@ footer {
 }
 
 .current-review-move {
-  background-color: gold;
+  background-color: #7ed957;
   border-radius: 6px;
   padding: 4px;
+}
+
+.review-square {
+  background-color: #7ed957 !important;
+  box-shadow: 0 0 18px #7ed957;
 }

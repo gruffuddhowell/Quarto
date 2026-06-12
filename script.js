@@ -237,6 +237,14 @@ function drawBoard() {
       square.classList.add("winning-square");
     }
 
+    if (reviewing && reviewIndex !== -1) {
+        let reviewedMoveSquare = boardHistory[reviewIndex].square;
+        
+        if (i === reviewedMoveSquare) {
+        square.classList.add("review-square");
+    }
+}
+
     if (!reviewing && i === lastBotSquare && winner === null) {
       square.classList.add("bot-move");
     }
@@ -353,8 +361,9 @@ function placePiece(index) {
 function putPieceOnBoard(index, botMoved) {
   board[index] = selectedPiece;
   boardHistory.push({
-    board: [...board]
-  });
+  board: [...board],
+  square: index
+});
   pieces = pieces.filter(piece => piece !== selectedPiece);
   selectedPiece = null;
 
