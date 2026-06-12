@@ -9,47 +9,49 @@
   <h1>Quarto</h1>
 
   <div id="menu">
-    <h2>Choose game mode</h2>
-    <button id="playerButton">Play against Player</button>
-    <button id="rulesButton">Rules</button>
+  <h2>Choose game mode</h2>
 
-    <div id="rulesPanel">
-  <h2>How to Play Quarto</h2>
+  <button id="playerButton">Play against Player</button>
+  <button id="rulesButton">Rules</button>
 
-  <p>
-    Each piece has four attributes:
-  </p>
+  <div id="rulesPanel">
+    <h2>How to Play Quarto</h2>
 
-  <ul>
-    <li>Tall or Short</li>
-    <li>Light or Dark</li>
-    <li>Round or Square</li>
-    <li>Hollow or Solid</li>
-  </ul>
+    <p>Each piece has four attributes:</p>
 
-  <p>
-    On your turn, you choose a piece for your opponent.
-  </p>
+    <ul>
+      <li>Tall or Short</li>
+      <li>Light or Dark</li>
+      <li>Round or Square</li>
+      <li>Hollow or Solid</li>
+    </ul>
 
-  <p>
-    Your opponent must place that piece somewhere on the board.
-  </p>
+    <p>On your turn, you choose a piece for your opponent.</p>
 
-  <p>
-    Then they choose a piece for you.
-  </p>
+    <p>Your opponent must place that piece somewhere on the board.</p>
 
-  <p>
-    Create a row, column or diagonal of four pieces sharing ANY attribute to win.
-  </p>
-</div>
+    <p>Then they choose a piece for you.</p>
 
-    <h2>Play against Bot</h2>
-    <button id="easyBotButton">Easy Bot</button>
-    <button id="mediumBotButton">Medium Bot</button>
-    <button id="hardBotButton">Hard Bot</button>
-    <button id="extremeBotButton">Extreme Bot</button>
+    <p>Create a row, column or diagonal of four pieces sharing ANY attribute to win.</p>
   </div>
+
+  <h2>Theme</h2>
+
+  <select id="themeSelect">
+    <option value="wood">Wooden</option>
+    <option value="blackwhite">Black & White</option>
+    <option value="redblue">Red & Blue</option>
+    <option value="forest">Forest</option>
+    <option value="purplegold">Purple & Gold</option>
+  </select>
+
+  <h2>Play against Bot</h2>
+
+  <button id="easyBotButton">Easy Bot</button>
+  <button id="mediumBotButton">Medium Bot</button>
+  <button id="hardBotButton">Hard Bot</button>
+  <button id="extremeBotButton">Extreme Bot</button>
+</div>
 
   <div id="game">
     <div id="scoreboard"></div>
@@ -86,7 +88,7 @@
   </div>
 
   <footer>
-  Quarto implementation by Gruffudd Howell · v1.6
+  Quarto implementation by Gruffudd Howell · v1.7
 </footer>
 
 <script src="script.js"></script>

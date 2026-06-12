@@ -1,7 +1,16 @@
+:root {
+  --page-bg: #ead8bd;
+  --board-bg: #5c3a21;
+  --square-bg: #b88755;
+  --square-hover: #c99763;
+  --border-colour: #3b2414;
+  --piece-bg: #f3e3c8;
+}
+
 body {
   font-family: Arial;
   text-align: center;
-  background-color: #ead8bd;
+  background-color: var(--page-bg);
 }
 
 h1 {
@@ -12,15 +21,15 @@ h1 {
 button {
   padding: 10px 18px;
   font-size: 18px;
-  border: 3px solid #3b2414;
+  border: 3px solid var(--border-colour);
   border-radius: 10px;
-  background-color: #b88755;
+  background-color: var(--square-bg);
   cursor: pointer;
   margin: 5px;
 }
 
 button:hover {
-  background-color: #c99763;
+  background-color: var(--square-hover);
 }
 
 #game {
@@ -56,8 +65,8 @@ button:hover {
   width: fit-content;
   padding: 20px;
 
-  background-color: #5c3a21;
-  border: 8px solid #3b2414;
+  background-color: var(--board-bg);
+  border: 8px solid var(--border-colour);
   border-radius: 18px;
 }
 
@@ -87,8 +96,8 @@ button:hover {
 .square {
   width: 90px;
   height: 90px;
-  background-color: #b88755;
-  border: 3px solid #3b2414;
+  background-color: var(--square-bg);
+  border: 3px solid var(--border-colour);;
   border-radius: 12px;
 
   display: flex;
@@ -110,7 +119,7 @@ button:hover {
 }
 
 .square:hover {
-  background-color: #c99763;
+  background-color: var(--square-hover);
 }
 
 .winning-square {
@@ -240,4 +249,44 @@ footer {
 .review-square {
   background-color: #7ed957 !important;
   box-shadow: 0 0 18px #7ed957;
+}
+
+.theme-wood {
+  --page-bg: #ead8bd;
+  --board-bg: #5c3a21;
+  --square-bg: #b88755;
+  --square-hover: #c99763;
+  --border-colour: #3b2414;
+}
+
+.theme-blackwhite {
+  --page-bg: white;
+  --board-bg: black;
+  --square-bg: #dddddd;
+  --square-hover: #bbbbbb;
+  --border-colour: black;
+}
+
+.theme-redblue {
+  --page-bg: #fceaea;
+  --board-bg: #1d3557;
+  --square-bg: #e63946;
+  --square-hover: #f05d68;
+  --border-colour: #0f2238;
+}
+
+.theme-forest {
+  --page-bg: #d8f3dc;
+  --board-bg: #2d6a4f;
+  --square-bg: #52b788;
+  --square-hover: #74c69d;
+  --border-colour: #1b4332;
+}
+
+.theme-purplegold {
+  --page-bg: #f3e8ff;
+  --board-bg: #5a189a;
+  --square-bg: #7b2cbf;
+  --square-hover: #9d4edd;
+  --border-colour: #ffbe0b;
 }

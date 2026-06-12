@@ -41,6 +41,8 @@ const scoreboard = document.getElementById("scoreboard");
 const previewPiece = document.getElementById("previewPiece");
 const historyList = document.getElementById("history");
 
+const themeSelect = document.getElementById("themeSelect");
+
 const rulesButton =
   document.getElementById("rulesButton");
 
@@ -50,7 +52,7 @@ const rulesPanel =
 const toggleHistoryButton =
   document.getElementById("toggleHistoryButton");
 
-rulesButton.onclick = function () {
+  rulesButton.onclick = function () {
 
   if (rulesPanel.style.display === "block") {
     rulesPanel.style.display = "none";
@@ -62,7 +64,16 @@ rulesButton.onclick = function () {
 
 };
 
-  playerButton.onclick = function () {
+themeSelect.onchange = function () {
+
+  let theme = themeSelect.value;
+
+  document.body.className = "theme-" + theme;
+
+  localStorage.setItem("quartoTheme", theme);
+};
+
+playerButton.onclick = function () {
   gameMode = "player";
   botDifficulty = null;
   showGame();
@@ -758,4 +769,13 @@ function saveScores() {
   localStorage.setItem("botScore", botScore);
   localStorage.setItem("player1Score", player1Score);
   localStorage.setItem("player2Score", player2Score);
+}
+
+let savedTheme = localStorage.getItem("quartoTheme");
+
+if (savedTheme) {
+  document.body.className = "theme-" + savedTheme;
+  themeSelect.value = savedTheme;
+} else {
+  document.body.className = "theme-wood";
 }
