@@ -200,3 +200,9 @@ button:hover {
 .hollow.round::after {
   border-radius: 50%;
 }
+
+footer {
+    margin: 30px;
+    font-size: 16px;
+    color: #3b2414;
+}
